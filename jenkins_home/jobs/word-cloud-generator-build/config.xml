@@ -10,18 +10,19 @@
         <numToKeep>3</numToKeep>
         <artifactDaysToKeep>-1</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
+        <removeLastBuild>false</removeLastBuild>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.33.1">
-      <projectUrl>https://github.com/wickett/word-cloud-generator/</projectUrl>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.40.0">
+      <projectUrl>https://github.com/huynhdanhlang/word-cloud-generator/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.7.2">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@5.6.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/wickett/word-cloud-generator</url>
+        <url>https://github.com/huynhdanhlang/word-cloud-generator</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -33,7 +34,7 @@
     <submoduleCfg class="empty-list"/>
     <extensions>
       <hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
-        <relativeTargetDir>src/github.com/wickett/word-cloud-generator</relativeTargetDir>
+        <relativeTargetDir>src/github.com/huynhdanhlang/word-cloud-generator</relativeTargetDir>
       </hudson.plugins.git.extensions.impl.RelativeTargetDirectory>
     </extensions>
   </scm>
@@ -50,7 +51,7 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>cd src/github.com/wickett/word-cloud-generator
+      <command>cd src/github.com/huynhdanhlang/word-cloud-generator
 
 export GOPATH=${WORKSPACE}
 
@@ -79,7 +80,7 @@ md5sum word-cloud-generator.gz</command>
           <artifactId>word-cloud-generator</artifactId>
           <type>gz</type>
           <classifier></classifier>
-          <file>src/github.com/wickett/word-cloud-generator/artifacts/linux/word-cloud-generator.gz</file>
+          <file>src/github.com/huynhdanhlang/word-cloud-generator/artifacts/linux/word-cloud-generator.gz</file>
         </sp.sd.nexusartifactuploader.Artifact>
       </artifacts>
       <credentialsId>708708f9-0960-415a-985e-b33cf9c792c3</credentialsId>
@@ -87,15 +88,15 @@ md5sum word-cloud-generator.gz</command>
   </builders>
   <publishers/>
   <buildWrappers>
-    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.28"/>
+    <org.jenkinsci.plugins.golang.GolangBuildWrapper plugin="golang@1.4">
+      <goVersion>Go 1.16.6</goVersion>
+    </org.jenkinsci.plugins.golang.GolangBuildWrapper>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.33">
       <strategy class="hudson.plugins.build_timeout.impl.AbsoluteTimeOutStrategy">
         <timeoutMinutes>10</timeoutMinutes>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.13"/>
-    <org.jenkinsci.plugins.golang.GolangBuildWrapper plugin="golang@1.4">
-      <goVersion>Go 1.16.6</goVersion>
-    </org.jenkinsci.plugins.golang.GolangBuildWrapper>
   </buildWrappers>
 </project>
