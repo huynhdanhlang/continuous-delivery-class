@@ -48,4 +48,5 @@ jenkins_home/copy_reference_file.log
 jenkins_home/.cache
 nexus-data/log
 nexus-data/cache
+nexus-data/tmp
 chef-repo/nodes

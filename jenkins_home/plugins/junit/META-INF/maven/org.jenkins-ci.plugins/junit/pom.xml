@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.jenkins-ci.plugins</groupId>
   <artifactId>junit</artifactId>
-  <version>1311.v39e1716e4eb_e</version>
+  <version>1312.v1a_235a_b_94a_31</version>
   <packaging>hpi</packaging>
   <name>JUnit Plugin</name>
   <description>Allows JUnit-format test results to be published.</description>
@@ -19,7 +19,7 @@
   <scm>
     <connection>scm:git:https://github.com/jenkinsci/junit-plugin.git</connection>
     <developerConnection>scm:git:https://github.com/jenkinsci/junit-plugin</developerConnection>
-    <tag>39e1716e4ebef4bd73a63ca313174b299f07ffcc</tag>
+    <tag>1a235ab94a3175f6e18d73a0a530edaf99ace769</tag>
     <url>https://github.com/jenkinsci/junit-plugin</url>
   </scm>
   <distributionManagement>

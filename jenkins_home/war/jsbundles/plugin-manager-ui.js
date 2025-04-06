@@ -1,26 +1,26 @@
 /******/ (function() { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 6165:
+/***/ 268:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 "use strict";
 
-// EXTERNAL MODULE: ../../../../.yarn/berry/cache/lodash-npm-4.17.21-6382451519-10c0.zip/node_modules/lodash/debounce.js
-var debounce = __webpack_require__(9962);
+// EXTERNAL MODULE: ./node_modules/lodash/debounce.js
+var debounce = __webpack_require__(8221);
 var debounce_default = /*#__PURE__*/__webpack_require__.n(debounce);
-// EXTERNAL MODULE: ./war/src/main/js/templates/plugin-manager/available.hbs
-var available = __webpack_require__(2081);
+// EXTERNAL MODULE: ./src/main/js/templates/plugin-manager/available.hbs
+var available = __webpack_require__(1322);
 var available_default = /*#__PURE__*/__webpack_require__.n(available);
-// EXTERNAL MODULE: ../../../../.yarn/berry/cache/jquery-npm-3.7.1-eeeac0f21e-10c0.zip/node_modules/jquery/dist/jquery.js
-var jquery = __webpack_require__(3189);
+// EXTERNAL MODULE: ./node_modules/jquery/dist/jquery.js
+var jquery = __webpack_require__(4692);
 var jquery_default = /*#__PURE__*/__webpack_require__.n(jquery);
-// EXTERNAL MODULE: ../../../../.yarn/berry/cache/window-handle-npm-1.0.1-369b8e9cbe-10c0.zip/node_modules/window-handle/index.js
-var window_handle = __webpack_require__(8600);
-// EXTERNAL MODULE: ../../../../.yarn/berry/cache/handlebars-npm-4.7.8-25244c2c82-10c0.zip/node_modules/handlebars/runtime.js
-var runtime = __webpack_require__(1362);
+// EXTERNAL MODULE: ./node_modules/window-handle/index.js
+var window_handle = __webpack_require__(7450);
+// EXTERNAL MODULE: ./node_modules/handlebars/runtime.js
+var runtime = __webpack_require__(3633);
 var runtime_default = /*#__PURE__*/__webpack_require__.n(runtime);
-;// CONCATENATED MODULE: ./war/src/main/js/util/jenkins.js
+;// ./src/main/js/util/jenkins.js
 /**
  * Jenkins JS Modules common utility functions
  */
@@ -250,7 +250,7 @@ jenkins.staplerPost = function (url, $form, success, options) {
   }, options));
 };
 /* harmony default export */ var util_jenkins = (jenkins);
-;// CONCATENATED MODULE: ./war/src/main/js/api/pluginManager.js
+;// ./src/main/js/api/pluginManager.js
 /**
  * Provides a wrapper to interact with the plugin manager & update center
  */
@@ -564,7 +564,7 @@ pluginManager.restartJenkins = function (handler) {
   });
 };
 /* harmony default export */ var api_pluginManager = (pluginManager);
-;// CONCATENATED MODULE: ./war/src/main/js/plugin-manager-ui.js
+;// ./src/main/js/plugin-manager-ui.js
 
 
 
@@ -650,10 +650,10 @@ function updateInstallButtonState() {
 
 /***/ }),
 
-/***/ 2081:
+/***/ 1322:
 /***/ (function(module, __unused_webpack_exports, __webpack_require__) {
 
-var Handlebars = __webpack_require__(1362);
+var Handlebars = __webpack_require__(3633);
 function __default(obj) { return obj && (obj.__esModule ? obj["default"] : obj); }
 module.exports = (Handlebars["default"] || Handlebars).template({"1":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression, alias3=depth0 != null ? depth0 : (container.nullContext || {}), lookupProperty = container.lookupProperty || function(parent, propertyName) {
@@ -1000,7 +1000,7 @@ module.exports = (Handlebars["default"] || Handlebars).template({"1":function(co
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [96], function() { return __webpack_require__(6165); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [96], function() { return __webpack_require__(268); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

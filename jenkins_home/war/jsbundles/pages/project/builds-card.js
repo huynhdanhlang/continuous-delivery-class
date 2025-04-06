@@ -2,14 +2,14 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 3698:
+/***/ 2652:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 
-// EXTERNAL MODULE: ../../../../.yarn/berry/cache/lodash-npm-4.17.21-6382451519-10c0.zip/node_modules/lodash/debounce.js
-var debounce = __webpack_require__(9962);
+// EXTERNAL MODULE: ./node_modules/lodash/debounce.js
+var debounce = __webpack_require__(8221);
 var debounce_default = /*#__PURE__*/__webpack_require__.n(debounce);
-;// CONCATENATED MODULE: ./war/src/main/js/util/behavior-shim.js
+;// ./src/main/js/util/behavior-shim.js
 function specify(selector, id, priority, behavior) {
   Behaviour.specify(selector, id, priority, behavior);
 }
@@ -20,7 +20,7 @@ function applySubtree(startNode, includeSelf) {
   specify,
   applySubtree
 });
-;// CONCATENATED MODULE: ./war/src/main/js/pages/project/builds-card.js
+;// ./src/main/js/pages/project/builds-card.js
 
 
 
@@ -32,6 +32,7 @@ const ajaxUrl = buildHistoryPage.getAttribute("page-ajax");
 const card = document.querySelector("#jenkins-builds");
 const contents = card.querySelector("#jenkins-build-history");
 const container = card.querySelector(".app-builds-container");
+const loadingBuilds = card.querySelector("#loading-builds");
 const noBuilds = card.querySelector("#no-builds");
 
 // Pagination controls
@@ -77,6 +78,7 @@ function load() {
         if (responseText.trim() === "") {
           contents.innerHTML = "";
           noBuilds.style.display = "block";
+          loadingBuilds.style.display = "none";
           updateCardControls({
             pageHasUp: false,
             pageHasDown: false,
@@ -88,7 +90,7 @@ function load() {
 
         // Show the refreshed builds list
         contents.innerHTML = responseText;
-        noBuilds.style.display = "none";
+        loadingBuilds.style.display = "none";
         behavior_shim.applySubtree(contents);
 
         // Show the card controls
@@ -149,6 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
     pageSearch.classList.add("jenkins-search--loading");
     debouncedLoad();
   });
+  container.classList.add("app-builds-container--loading");
   load();
   window.addEventListener("focus", function () {
     load();
@@ -332,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function () {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [96], function() { return __webpack_require__(3698); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [96], function() { return __webpack_require__(2652); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
