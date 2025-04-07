@@ -1,22 +1,31 @@
 Manifest-Version: 1.0
-Archiver-Version: Plexus Archiver
-Created-By: Apache Maven
-Built-By: jenkins
-Build-Jdk: 1.8.0_202
-Extension-Name: nexus-jenkins-plugin
-Specification-Title: The Jenkins Plugins Parent POM Project
-Implementation-Title: nexus-jenkins-plugin
-Implementation-Version: 3.11.20210716-143001.0533f8f
+Created-By: Maven Archiver 3.6.0
+Build-Jdk-Spec: 11
+Specification-Title: Nexus Platform Plugin
+Specification-Version: 3.22
+Implementation-Title: Nexus Platform Plugin
+Implementation-Version: 3.22.0-01
 Group-Id: org.sonatype.nexus.ci
+Artifact-Id: nexus-jenkins-plugin
 Short-Name: nexus-jenkins-plugin
 Long-Name: Nexus Platform Plugin
-Url: https://github.com/jenkinsci/nexus-platform-plugin
-Minimum-Java-Version: 1.8
-Plugin-Version: 3.11.20210716-143001.0533f8f
-Hudson-Version: 2.7
-Jenkins-Version: 2.7
-Mask-Classes: com.fasterxml.jackson.              org.cyclonedx.
-Plugin-Dependencies: workflow-step-api:2.8,credentials:2.1.8,plain-cre
- dentials:1.1,structs:1.14,token-macro:1.11
+Url: https://github.com/sonatype/jenkins-plugin
+Plugin-Version: 3.22.0-01
+Hudson-Version: 2.452.3
+Jenkins-Version: 2.452.3
+Mask-Classes: com.fasterxml.jackson.             org.cyclonedx.         
+     org.codehaus.stax2.             com.ctc.wstx.             org.objec
+ tweb.asm.             org.antlr.v4.
+Plugin-Dependencies: workflow-api:1336.vee415d95c521,bouncycastle-api:2.
+ 30.1.78.1-248.ve27176eb_46cb_,credentials:1371.vfee6b_095f0a_3,plain-cr
+ edentials:183.va_de8f1dd5a_2b_,structs:338.v848422169819
 Plugin-Developers: Sonatype, Inc.:whyjustin:
+Plugin-License-Name: ASL2
+Plugin-License-Url: https://opensource.org/licenses/Apache-2.0
+Plugin-ScmConnection: scm:git:ssh://github.com/sonatype/jenkins-plugin.g
+ it
+Plugin-ScmTag: HEAD
+Plugin-ScmUrl: https://github.com/sonatype/jenkins-plugin
+Plugin-GitHash: 9c78987ec07bd124edd84d0f8c5ebc00ff8a9cb4
+Implementation-Build: 9c78987ec07bd124edd84d0f8c5ebc00ff8a9cb4
 

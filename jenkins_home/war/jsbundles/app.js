@@ -2,11 +2,11 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 9751:
+/***/ 7807:
 /***/ (function(__unused_webpack_module, __unused_webpack___webpack_exports__, __webpack_require__) {
 
 
-;// CONCATENATED MODULE: ./war/src/main/js/util/path.js
+;// ./src/main/js/util/path.js
 function combinePath(pathOne, pathTwo) {
   let queryParams;
   let i = pathOne.indexOf("?");
@@ -27,7 +27,7 @@ function combinePath(pathOne, pathTwo) {
 /* harmony default export */ var path = ({
   combinePath
 });
-;// CONCATENATED MODULE: ./war/src/main/js/util/behavior-shim.js
+;// ./src/main/js/util/behavior-shim.js
 function specify(selector, id, priority, behavior) {
   Behaviour.specify(selector, id, priority, behavior);
 }
@@ -38,7 +38,7 @@ function applySubtree(startNode, includeSelf) {
   specify,
   applySubtree
 });
-;// CONCATENATED MODULE: ./war/src/main/js/util/dom.js
+;// ./src/main/js/util/dom.js
 function createElementFromHtml(html) {
   const template = document.createElement("template");
   template.innerHTML = html.trim();
@@ -47,7 +47,7 @@ function createElementFromHtml(html) {
 function toId(string) {
   return string.trim().replace(/[\W_]+/g, "-").toLowerCase();
 }
-;// CONCATENATED MODULE: ./war/src/main/js/util/security.js
+;// ./src/main/js/util/security.js
 function xmlEscape(str) {
   return str.replace(/[<>&'"]/g, match => {
     switch (match) {
@@ -65,7 +65,7 @@ function xmlEscape(str) {
   });
 }
 
-;// CONCATENATED MODULE: ./war/src/main/js/components/dropdowns/templates.js
+;// ./src/main/js/components/dropdowns/templates.js
 
 
 function dropdown() {
@@ -142,7 +142,7 @@ function disabled(label) {
   placeholder,
   disabled
 });
-;// CONCATENATED MODULE: ./war/src/main/js/util/keyboard.js
+;// ./src/main/js/util/keyboard.js
 /**
  * @param {Element} container - the container for the items
  * @param {function(): NodeListOf<Element>} itemsFunc - function which returns the list of items
@@ -214,7 +214,7 @@ function makeKeyboardNavigable(container, itemsFunc, selectedClass) {
   });
 }
 function scrollAndSelect(selectedItem, selectedClass, items) {
-  if (selectedItem !== null) {
+  if (selectedItem) {
     if (!isInViewport(selectedItem)) {
       selectedItem.scrollIntoView(false);
     }
@@ -228,9 +228,9 @@ function isInViewport(element) {
   const rect = element.getBoundingClientRect();
   return rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth;
 }
-// EXTERNAL MODULE: ../../../../.yarn/berry/cache/tippy.js-npm-6.3.7-424f946d38-10c0.zip/node_modules/tippy.js/dist/tippy.esm.js + 16 modules
-var tippy_esm = __webpack_require__(4216);
-;// CONCATENATED MODULE: ./war/src/main/js/components/dropdowns/utils.js
+// EXTERNAL MODULE: ./node_modules/tippy.js/dist/tippy.esm.js + 16 modules
+var tippy_esm = __webpack_require__(7381);
+;// ./src/main/js/components/dropdowns/utils.js
 
 
 
@@ -244,6 +244,9 @@ const SELECTED_ITEM_CLASS = "jenkins-dropdown__item--selected";
  * @param callback - called to retrieve the list of dropdown items
  */
 function generateDropdown(element, callback, immediate) {
+  if (element._tippy && element._tippy.props.theme === "dropdown") {
+    element._tippy.destroy();
+  }
   (0,tippy_esm/* default */.Ay)(element, Object.assign({}, templates.dropdown(), {
     hideOnClick: element.dataset["hideOnClick"] !== "false",
     onCreate(instance) {
@@ -394,12 +397,40 @@ function convertHtmlToItems(children) {
   });
   return items;
 }
+function validateDropdown(e) {
+  if (e.targetUrl) {
+    const method = e.getAttribute("checkMethod") || "post";
+    try {
+      FormChecker.delayedCheck(e.targetUrl(), method, e.targetElement);
+    } catch (x) {
+      console.warn(x);
+    }
+  }
+}
+function getMaxSuggestionCount(e, defaultValue) {
+  return parseInt(e.dataset["maxsuggestions"]) || defaultValue;
+}
+function debounce(callback) {
+  callback.running = false;
+  return () => {
+    if (!callback.running) {
+      callback.running = true;
+      setTimeout(() => {
+        callback();
+        callback.running = false;
+      }, 300);
+    }
+  };
+}
 /* harmony default export */ var utils = ({
   convertHtmlToItems,
   generateDropdown,
-  generateDropdownItems
+  generateDropdownItems,
+  validateDropdown,
+  getMaxSuggestionCount,
+  debounce
 });
-;// CONCATENATED MODULE: ./war/src/main/js/components/dropdowns/jumplists.js
+;// ./src/main/js/components/dropdowns/jumplists.js
 
 
 
@@ -482,8 +513,13 @@ function mapChildrenItemsToDropdownItems(items) {
             fetch(item.url, {
               method: "post",
               headers: crumb.wrap({})
+            }).then(rsp => {
+              if (rsp.ok) {
+                notificationBar.show(item.displayName + ": Done.", notificationBar.SUCCESS);
+              } else {
+                notificationBar.show(item.displayName + ": Failed.", notificationBar.ERROR);
+              }
             });
-            notificationBar.show(item.displayName + ": Done.", notificationBar.SUCCESS);
           }
         }
       },
@@ -496,7 +532,7 @@ function mapChildrenItemsToDropdownItems(items) {
 /* harmony default export */ var jumplists = ({
   init
 });
-;// CONCATENATED MODULE: ./war/src/main/js/components/dropdowns/inpage-jumplist.js
+;// ./src/main/js/components/dropdowns/inpage-jumplist.js
 
 
 /*
@@ -521,7 +557,7 @@ function inpage_jumplist_init() {
 /* harmony default export */ var inpage_jumplist = ({
   init: inpage_jumplist_init
 });
-;// CONCATENATED MODULE: ./war/src/main/js/components/dropdowns/overflow-button.js
+;// ./src/main/js/components/dropdowns/overflow-button.js
 
 
 
@@ -540,7 +576,7 @@ function overflow_button_init() {
 /* harmony default export */ var overflow_button = ({
   init: overflow_button_init
 });
-;// CONCATENATED MODULE: ./war/src/main/js/util/symbols.js
+;// ./src/main/js/util/symbols.js
 const INFO = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 56C145.72 56 56 145.72 56 256s89.72 200 200 200 200-89.72 200-200S366.28 56 256 56zm0 82a26 26 0 11-26 26 26 26 0 0126-26zm48 226h-88a16 16 0 010-32h28v-88h-16a16 16 0 010-32h32a16 16 0 0116 16v104h28a16 16 0 010 32z" fill='currentColor' /></svg>`;
 const SUCCESS = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm108.25 138.29l-134.4 160a16 16 0 01-12 5.71h-.27a16 16 0 01-11.89-5.3l-57.6-64a16 16 0 1123.78-21.4l45.29 50.32 122.59-145.91a16 16 0 0124.5 20.58z" fill='currentColor'/></svg>`;
 const WARNING = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M449.07 399.08L278.64 82.58c-12.08-22.44-44.26-22.44-56.35 0L51.87 399.08A32 32 0 0080 446.25h340.89a32 32 0 0028.18-47.17zm-198.6-1.83a20 20 0 1120-20 20 20 0 01-20 20zm21.72-201.15l-5.74 122a16 16 0 01-32 0l-5.74-121.95a21.73 21.73 0 0121.5-22.69h.21a21.74 21.74 0 0121.73 22.7z" fill='currentColor'/></svg>`;
@@ -548,7 +584,7 @@ const ERROR = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><pa
 const CLOSE = `<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M368 368L144 144M368 144L144 368"/></svg>`;
 const CHEVRON_DOWN = `<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Chevron Down</title><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M112 184l144 144 144-144"/></svg>`;
 const FUNNEL = `<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M35.4 87.12l168.65 196.44A16.07 16.07 0 01208 294v119.32a7.93 7.93 0 005.39 7.59l80.15 26.67A7.94 7.94 0 00304 440V294a16.07 16.07 0 014-10.44L476.6 87.12A14 14 0 00466 64H46.05A14 14 0 0035.4 87.12z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>`;
-;// CONCATENATED MODULE: ./war/src/main/js/components/dropdowns/hetero-list.js
+;// ./src/main/js/components/dropdowns/hetero-list.js
 
 
 
@@ -770,7 +806,164 @@ function generateDropDown(button, callback) {
 /* harmony default export */ var hetero_list = ({
   init: hetero_list_init
 });
-;// CONCATENATED MODULE: ./war/src/main/js/components/dropdowns/index.js
+;// ./src/main/js/components/dropdowns/combo-box.js
+
+
+function combo_box_init() {
+  function convertSuggestionToItem(suggestion, e) {
+    const confirm = () => {
+      e.value = suggestion.name;
+      utils.validateDropdown(e);
+      e.focus();
+    };
+    return {
+      label: suggestion.name,
+      onClick: confirm,
+      onKeyPress: evt => {
+        if (evt.key === "Tab") {
+          confirm();
+          e.dropdown.hide();
+          evt.preventDefault();
+        }
+      }
+    };
+  }
+  function createAndShowDropdown(e, div, suggestions) {
+    const items = suggestions.splice(0, utils.getMaxSuggestionCount(e, 20)).map(s => convertSuggestionToItem(s, e));
+    if (!e.dropdown) {
+      utils.generateDropdown(div, instance => {
+        e.dropdown = instance;
+      }, true);
+    }
+    e.dropdown.setContent(utils.generateDropdownItems(items, true));
+    e.dropdown.show();
+  }
+  function updateSuggestions(e, div, items) {
+    const text = e.value.trim();
+    let filteredItems = text ? items.filter(item => item.indexOf(text) === 0) : items;
+    const suggestions = filteredItems.filter(item => item.indexOf(text) === 0).map(item => {
+      return {
+        name: item
+      };
+    });
+    createAndShowDropdown(e, div, suggestions || []);
+  }
+  behavior_shim.specify("INPUT.combobox2", "combobox", 100, function (e) {
+    // form field with auto-completion support
+    // insert the auto-completion container
+    refillOnChange(e, function (params) {
+      const div = document.createElement("DIV");
+      e.parentNode.insertBefore(div, e.nextElementSibling);
+      e.style.position = "relative";
+      const url = e.getAttribute("fillUrl");
+      fetch(url, {
+        headers: crumb.wrap({
+          "Content-Type": "application/x-www-form-urlencoded"
+        }),
+        method: "post",
+        body: new URLSearchParams(params)
+      }).then(rsp => rsp.ok ? rsp.json() : {}).then(items => {
+        e.addEventListener("focus", () => updateSuggestions(e, div, items));
+
+        // otherwise menu won't hide on tab with nothing selected
+        // needs delay as without that it blocks click selection of an item
+        e.addEventListener("focusout", () => setTimeout(() => e.dropdown.hide(), 200));
+        e.addEventListener("input", utils.debounce(() => {
+          updateSuggestions(e, div, items);
+        }));
+      });
+    });
+  });
+}
+/* harmony default export */ var combo_box = ({
+  init: combo_box_init
+});
+;// ./src/main/js/components/dropdowns/autocomplete.js
+
+
+function autocomplete_init() {
+  function addValue(value, item, delimiter) {
+    const prev = value.includes(delimiter) ? value.substring(0, value.lastIndexOf(delimiter) + 1) + " " : "";
+    return prev + item + delimiter + " ";
+  }
+  function convertSuggestionToItem(suggestion, e) {
+    const delimiter = e.getAttribute("autoCompleteDelimChar");
+    const confirm = () => {
+      e.value = delimiter ? addValue(e.value, suggestion.name, delimiter) : suggestion.name;
+      utils.validateDropdown(e);
+      e.focus();
+    };
+    return {
+      label: suggestion.name,
+      onClick: confirm,
+      onKeyPress: evt => {
+        if (evt.key === "Tab") {
+          confirm();
+          e.dropdown.hide();
+          evt.preventDefault();
+        }
+      }
+    };
+  }
+  function createAndShowDropdown(e, suggestions) {
+    const items = suggestions.splice(0, utils.getMaxSuggestionCount(e, 10)).map(s => convertSuggestionToItem(s, e));
+    if (!e.dropdown) {
+      utils.generateDropdown(e, instance => {
+        e.dropdown = instance;
+        instance.popper.style.minWidth = e.offsetWidth + "px";
+      }, true);
+    }
+    e.dropdown.setContent(utils.generateDropdownItems(items, true));
+    e.dropdown.show();
+  }
+  function updateSuggestions(e) {
+    const text = e.value.trim();
+    const delimiter = e.getAttribute("autoCompleteDelimChar");
+    const word = delimiter ? text.split(delimiter).reverse()[0].trim() : text;
+    if (!word) {
+      if (e.dropdown) {
+        e.dropdown.hide();
+      }
+      return;
+    }
+    const url = e.getAttribute("autoCompleteUrl");
+    const depends = e.getAttribute("fillDependsOn");
+    const q = qs(e).addThis();
+    if (depends && depends.length > 0) {
+      depends.split(" ").forEach(TryEach(function (n) {
+        q.nearBy(n);
+      }));
+    }
+    const queryString = q.toString();
+    const idx = queryString.indexOf("?");
+    const parameters = queryString.substring(idx + 1);
+    fetch(url, {
+      method: "post",
+      headers: crumb.wrap({
+        "Content-Type": "application/x-www-form-urlencoded"
+      }),
+      body: parameters
+    }).then(rsp => rsp.ok ? rsp.json() : {}).then(response => createAndShowDropdown(e, response.suggestions || []));
+  }
+  behavior_shim.specify("INPUT.auto-complete", "input-auto-complete", 0, function (e) {
+    e.setAttribute("autocomplete", "off");
+    e.dataset["hideOnClick"] = "false";
+    // form field with auto-completion support
+    e.style.position = "relative";
+    // otherwise menu won't hide on tab with nothing selected
+    // needs delay as without that it blocks click selection of an item
+    e.addEventListener("focusout", () => setTimeout(() => e.dropdown && e.dropdown.hide(), 200));
+    e.addEventListener("input", utils.debounce(() => {
+      updateSuggestions(e);
+    }));
+  });
+}
+/* harmony default export */ var autocomplete = ({
+  init: autocomplete_init
+});
+;// ./src/main/js/components/dropdowns/index.js
+
+
 
 
 
@@ -780,11 +973,204 @@ function dropdowns_init() {
   inpage_jumplist.init();
   overflow_button.init();
   hetero_list.init();
+  combo_box.init();
+  autocomplete.init();
 }
 /* harmony default export */ var dropdowns = ({
   init: dropdowns_init
 });
-;// CONCATENATED MODULE: ./war/src/main/js/components/notifications/index.js
+;// ./src/main/js/components/command-palette/symbols.js
+const EXTERNAL_LINK = `<svg class="jenkins-command-palette__results__item__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M384 224v184a40 40 0 01-40 40H104a40 40 0 01-40-40V168a40 40 0 0140-40h167.48M336 64h112v112M224 288L440 72" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="40"/></svg>`;
+const HELP = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 40a216 216 0 10216 216A216 216 0 00256 40z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="38"/><path d="M200 202.29s.84-17.5 19.57-32.57C230.68 160.77 244 158.18 256 158c10.93-.14 20.69 1.67 26.53 4.45 10 4.76 29.47 16.38 29.47 41.09 0 26-17 37.81-36.37 50.8S251 281.43 251 296" fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="38"/><circle cx="250" cy="360" r="25" fill="currentColor"/></svg>`;
+;// ./src/main/js/components/command-palette/models.js
+
+
+
+/**
+ * @param {Object} params
+ * @param {string} params.icon
+ * @param {string} params.label
+ * @param {'symbol' | 'image'} params.type
+ * @param {string} params.url
+ * @param {boolean | undefined} params.isExternal
+ */
+function LinkResult(params) {
+  return {
+    label: params.label,
+    url: params.url,
+    render: () => {
+      return `<a class="jenkins-command-palette__results__item" href="${xmlEscape(params.url)}">
+        ${params.type === "image" ? `<img alt="${xmlEscape(params.label)}" class="jenkins-command-palette__results__item__icon" src="${params.icon}" />` : ""}
+        ${params.type !== "image" ? `<div class="jenkins-command-palette__results__item__icon">${params.icon}</div>` : ""}
+        ${xmlEscape(params.label)}
+        ${params.isExternal ? EXTERNAL_LINK : ""}
+    </a>`;
+    }
+  };
+}
+;// ./src/main/js/api/search.js
+/**
+ * @param {string} searchTerm
+ */
+function search(searchTerm) {
+  const address = document.getElementById("button-open-command-palette").dataset.searchUrl;
+  return fetch(`${address}?query=${encodeURIComponent(searchTerm)}`);
+}
+/* harmony default export */ var api_search = ({
+  search: search
+});
+;// ./src/main/js/components/command-palette/datasources.js
+
+
+const JenkinsSearchSource = {
+  execute(query) {
+    const rootUrl = document.head.dataset.rooturl;
+    function correctAddress(url) {
+      if (url.startsWith("/")) {
+        url = url.substring(1);
+      }
+      return rootUrl + "/" + url;
+    }
+    return api_search.search(query).then(rsp => rsp.json().then(data => {
+      return data["suggestions"].slice().map(e => LinkResult({
+        icon: e.icon,
+        type: e.type,
+        label: e.name,
+        url: correctAddress(e.url)
+      }));
+    }));
+  }
+};
+// EXTERNAL MODULE: ./node_modules/lodash/debounce.js
+var lodash_debounce = __webpack_require__(8221);
+var debounce_default = /*#__PURE__*/__webpack_require__.n(lodash_debounce);
+;// ./src/main/js/components/command-palette/index.js
+
+
+
+
+
+
+
+const datasources = [JenkinsSearchSource];
+function command_palette_init() {
+  const i18n = document.getElementById("command-palette-i18n");
+  const headerCommandPaletteButton = document.getElementById("button-open-command-palette");
+  if (headerCommandPaletteButton === null) {
+    return; // no JenkinsHeader, no h:searchbox
+  }
+  const commandPalette = document.getElementById("command-palette");
+  const commandPaletteWrapper = commandPalette.querySelector(".jenkins-command-palette__wrapper");
+  const commandPaletteInput = document.getElementById("command-bar");
+  const commandPaletteSearchBarContainer = commandPalette.querySelector(".jenkins-command-palette__search");
+  const searchResults = document.getElementById("search-results");
+  const searchResultsContainer = document.getElementById("search-results-container");
+  const hoverClass = "jenkins-command-palette__results__item--hover";
+  makeKeyboardNavigable(searchResultsContainer, () => searchResults.querySelectorAll("a"), hoverClass, () => {}, () => commandPalette.open);
+
+  // Events
+  headerCommandPaletteButton.addEventListener("click", function () {
+    if (commandPalette.hasAttribute("open")) {
+      hideCommandPalette();
+    } else {
+      showCommandPalette();
+    }
+  });
+  commandPaletteWrapper.addEventListener("click", function (e) {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+    hideCommandPalette();
+  });
+  function renderResults() {
+    const query = commandPaletteInput.value;
+    let results;
+    if (query.length === 0) {
+      results = Promise.all([LinkResult({
+        icon: HELP,
+        type: "symbol",
+        label: i18n.dataset.getHelp,
+        url: headerCommandPaletteButton.dataset.searchHelpUrl,
+        isExternal: true
+      })]);
+    } else {
+      results = Promise.all(datasources.map(ds => ds.execute(query))).then(e => e.flat());
+    }
+    results.then(results => {
+      // Clear current search results
+      searchResults.innerHTML = "";
+      if (query.length === 0 || Object.keys(results).length > 0) {
+        results.forEach(function (obj) {
+          const link = createElementFromHtml(obj.render());
+          link.addEventListener("mouseenter", e => itemMouseEnter(e));
+          searchResults.append(link);
+        });
+        updateSelectedItem(0);
+      } else {
+        const label = document.createElement("p");
+        label.className = "jenkins-command-palette__info";
+        label.innerHTML = "<span>" + i18n.dataset.noResultsFor + "</span> " + xmlEscape(commandPaletteInput.value);
+        searchResults.append(label);
+      }
+      searchResultsContainer.style.height = searchResults.offsetHeight + "px";
+      debouncedSpinner.cancel();
+      commandPaletteSearchBarContainer.classList.remove("jenkins-search--loading");
+    });
+  }
+  const debouncedSpinner = debounce_default()(() => {
+    commandPaletteSearchBarContainer.classList.add("jenkins-search--loading");
+  }, 150);
+  const debouncedLoad = debounce_default()(() => {
+    renderResults();
+  }, 150);
+  commandPaletteInput.addEventListener("input", () => {
+    debouncedSpinner();
+    debouncedLoad();
+  });
+
+  // Helper methods for visibility of command palette
+  function showCommandPalette() {
+    commandPalette.showModal();
+    commandPaletteInput.focus();
+    commandPaletteInput.setSelectionRange(0, commandPaletteInput.value.length);
+    renderResults();
+  }
+  function hideCommandPalette() {
+    commandPalette.setAttribute("closing", "");
+    commandPalette.addEventListener("animationend", () => {
+      commandPalette.removeAttribute("closing");
+      commandPalette.close();
+    }, {
+      once: true
+    });
+  }
+  function itemMouseEnter(item) {
+    let hoveredItems = document.querySelector("." + hoverClass);
+    if (hoveredItems) {
+      hoveredItems.classList.remove(hoverClass);
+    }
+    item.target.classList.add(hoverClass);
+  }
+  function updateSelectedItem(index) {
+    let scrollIntoView = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    const maxLength = searchResults.getElementsByTagName("a").length;
+    const hoveredItem = document.querySelector("." + hoverClass);
+    if (hoveredItem) {
+      hoveredItem.classList.remove(hoverClass);
+    }
+    if (index < maxLength) {
+      const element = Array.from(searchResults.getElementsByTagName("a"))[index];
+      element.classList.add(hoverClass);
+      if (scrollIntoView) {
+        element.scrollIntoView();
+      }
+    }
+  }
+}
+/* harmony default export */ var command_palette = ({
+  init: command_palette_init
+});
+;// ./src/main/js/components/notifications/index.js
 
 
 function notifications_init() {
@@ -859,7 +1245,7 @@ function notifications_init() {
 /* harmony default export */ var notifications = ({
   init: notifications_init
 });
-;// CONCATENATED MODULE: ./war/src/main/js/components/search-bar/index.js
+;// ./src/main/js/components/search-bar/index.js
 
 
 
@@ -935,7 +1321,7 @@ function search_bar_init() {
 /* harmony default export */ var search_bar = ({
   init: search_bar_init
 });
-;// CONCATENATED MODULE: ./war/src/main/js/components/tooltips/index.js
+;// ./src/main/js/components/tooltips/index.js
 
 
 const TOOLTIP_BASE = {
@@ -1014,7 +1400,7 @@ function tooltips_init() {
 /* harmony default export */ var tooltips = ({
   init: tooltips_init
 });
-;// CONCATENATED MODULE: ./war/src/main/js/components/stop-button-link/index.js
+;// ./src/main/js/components/stop-button-link/index.js
 
 function registerStopButton(link) {
   let question = link.getAttribute("data-confirm");
@@ -1044,7 +1430,7 @@ function stop_button_link_init() {
 /* harmony default export */ var stop_button_link = ({
   init: stop_button_link_init
 });
-;// CONCATENATED MODULE: ./war/src/main/js/components/confirmation-link/index.js
+;// ./src/main/js/components/confirmation-link/index.js
 
 function registerConfirmationLink(element) {
   const post = element.getAttribute("data-post") === "true";
@@ -1082,15 +1468,15 @@ function confirmation_link_init() {
 /* harmony default export */ var confirmation_link = ({
   init: confirmation_link_init
 });
-// EXTERNAL MODULE: ../../../../.yarn/berry/cache/jquery-npm-3.7.1-eeeac0f21e-10c0.zip/node_modules/jquery/dist/jquery.js
-var jquery = __webpack_require__(3189);
+// EXTERNAL MODULE: ./node_modules/jquery/dist/jquery.js
+var jquery = __webpack_require__(4692);
 var jquery_default = /*#__PURE__*/__webpack_require__.n(jquery);
-// EXTERNAL MODULE: ../../../../.yarn/berry/cache/window-handle-npm-1.0.1-369b8e9cbe-10c0.zip/node_modules/window-handle/index.js
-var window_handle = __webpack_require__(8600);
-// EXTERNAL MODULE: ../../../../.yarn/berry/cache/handlebars-npm-4.7.8-25244c2c82-10c0.zip/node_modules/handlebars/runtime.js
-var runtime = __webpack_require__(1362);
+// EXTERNAL MODULE: ./node_modules/window-handle/index.js
+var window_handle = __webpack_require__(7450);
+// EXTERNAL MODULE: ./node_modules/handlebars/runtime.js
+var runtime = __webpack_require__(3633);
 var runtime_default = /*#__PURE__*/__webpack_require__.n(runtime);
-;// CONCATENATED MODULE: ./war/src/main/js/util/jenkins.js
+;// ./src/main/js/util/jenkins.js
 /**
  * Jenkins JS Modules common utility functions
  */
@@ -1320,7 +1706,7 @@ jenkins.staplerPost = function (url, $form, success, options) {
   }, options));
 };
 /* harmony default export */ var util_jenkins = (jenkins);
-;// CONCATENATED MODULE: ./war/src/main/js/components/dialogs/index.js
+;// ./src/main/js/components/dialogs/index.js
 
 
 
@@ -1539,100 +1925,7 @@ function dialogs_init() {
 /* harmony default export */ var dialogs = ({
   init: dialogs_init
 });
-;// CONCATENATED MODULE: ./war/src/main/js/components/autocomplete/index.js
-
-
-function autocomplete_init() {
-  function addValue(value, item, delimiter) {
-    const prev = value.includes(delimiter) ? value.substring(0, value.lastIndexOf(delimiter) + 1) + " " : "";
-    return prev + item + delimiter + " ";
-  }
-  function validate(e) {
-    if (e.targetUrl) {
-      var method = e.getAttribute("checkMethod") || "post";
-      try {
-        FormChecker.delayedCheck(e.targetUrl(), method, e.targetElement);
-      } catch (x) {
-        console.warn(x);
-        return;
-      }
-    }
-  }
-  function convertSuggestionToItem(suggestion, e) {
-    const delimiter = e.getAttribute("autoCompleteDelimChar");
-    const confirm = () => {
-      e.value = delimiter ? addValue(e.value, suggestion.name, delimiter) : suggestion.name;
-      validate(e);
-      e.focus();
-    };
-    return {
-      label: suggestion.name,
-      onClick: confirm,
-      onKeyPress: evt => {
-        if (evt.key == "Tab") {
-          confirm();
-          e.dropdown.hide();
-          evt.preventDefault();
-        }
-      }
-    };
-  }
-  function getMaxSuggestionCount(e) {
-    return parseInt(e.dataset["maxsuggestions"]) || 10;
-  }
-  function createAndShowDropdown(e, suggestions) {
-    const items = suggestions.splice(0, getMaxSuggestionCount(e)).map(s => convertSuggestionToItem(s, e));
-    if (!e.dropdown) {
-      utils.generateDropdown(e, instance => {
-        e.dropdown = instance;
-        instance.popper.style.minWidth = e.offsetWidth + "px";
-      }, true);
-    }
-    e.dropdown.setContent(utils.generateDropdownItems(items, true));
-    e.dropdown.show();
-  }
-  function updateSuggestions(e) {
-    const text = e.value.trim();
-    const delimiter = e.getAttribute("autoCompleteDelimChar");
-    const word = delimiter ? text.split(delimiter).reverse()[0].trim() : text;
-    if (!word) {
-      if (e.dropdown) {
-        e.dropdown.hide();
-      }
-      return;
-    }
-    const url = e.getAttribute("autoCompleteUrl") + "?value=" + encodeURIComponent(word);
-    fetch(url).then(rsp => rsp.ok ? rsp.json() : {}).then(response => createAndShowDropdown(e, response.suggestions || []));
-  }
-  function debounce(callback) {
-    callback.running = false;
-    return () => {
-      if (!callback.running) {
-        callback.running = true;
-        setTimeout(() => {
-          callback();
-          callback.running = false;
-        }, 300);
-      }
-    };
-  }
-  behavior_shim.specify("INPUT.auto-complete", "input-auto-complete", 0, function (e) {
-    e.setAttribute("autocomplete", "off");
-    e.dataset["hideOnClick"] = "false";
-    // form field with auto-completion support
-    e.style.position = "relative";
-    // otherwise menu won't hide on tab with nothing selected
-    // needs delay as without that it blocks click selection of an item
-    e.addEventListener("focusout", () => setTimeout(() => e.dropdown && e.dropdown.hide(), 200));
-    e.addEventListener("input", debounce(() => {
-      updateSuggestions(e);
-    }));
-  });
-}
-/* harmony default export */ var autocomplete = ({
-  init: autocomplete_init
-});
-;// CONCATENATED MODULE: ./war/src/main/js/app.js
+;// ./src/main/js/app.js
 
 
 
@@ -1642,13 +1935,13 @@ function autocomplete_init() {
 
 
 dropdowns.init();
+command_palette.init();
 notifications.init();
 search_bar.init();
 tooltips.init();
 stop_button_link.init();
 confirmation_link.init();
 dialogs.init();
-autocomplete.init();
 
 /***/ })
 
@@ -1827,7 +2120,7 @@ autocomplete.init();
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [96], function() { return __webpack_require__(9751); })
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, [96], function() { return __webpack_require__(7807); })
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
