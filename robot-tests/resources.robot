@@ -5,16 +5,19 @@ Documentation     A resource file with reusable keywords and variables.
 ...               domain specific language. They utilize keywords provided
 ...               by the imported SeleniumLibrary.
 Library           SeleniumLibrary
+Variables   vars.py
 
 *** Variables ***
 ${SERVER}         localhost:8888
-${BROWSER}        Chrome
-${DELAY}          1
+${BROWSER}        Edge
+${DELAY}          2
 ${HOMEPAGE URL}   http://${SERVER}/
 ${VERSION URL}    http://${SERVER}/version
 ${API URL}        http://${SERVER}/api
 
 *** Keywords ***
+Init App
+  Create Webdriver    Edge    options=${signal_electron}    service=${signal_service}
 Open Browser To Home Page
     Open Browser    ${HOMEPAGE URL}    ${BROWSER}
     Maximize Browser Window
