@@ -50,3 +50,9 @@ nexus-data/log
 nexus-data/cache
 nexus-data/tmp
 chef-repo/nodes
+
+# Ingore user data browser
+/robot-tests/selenium
+/robot-tests/log.*
+/robot-tests/output.*
+/robot-tests/report.*

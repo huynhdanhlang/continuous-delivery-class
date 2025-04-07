@@ -1,4 +1,4 @@
-#!/Users/ernestmueller/code/continuous-delivery-class/robot-tests/venv/bin/python3.9
+#!/home/huynhdanhlang/LinkedIn/Repo/continuous-delivery-class/robot-tests/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
